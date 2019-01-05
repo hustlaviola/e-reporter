@@ -1,0 +1,25 @@
+{
+  "name": "eReporter",
+  "version": "1.0.0",
+  "description": "iReporter enables every citizen to bring any form of corruption to the notice of appropriate authorities and the general public.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hustlaviola/eReporter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hustlaviola/eReporter/issues"
+  },
+  "homepage": "https://github.com/hustlaviola/eReporter#readme",
+  "devDependencies": {
+    "eslint": "^5.12.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
+}
