@@ -4,6 +4,7 @@
   "description": "iReporter enables every citizen to bring any form of corruption to the notice of appropriate authorities and the general public.",
   "main": "index.js",
   "scripts": {
+    "start": "babel-node ./server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,5 +22,10 @@
     "eslint": "^5.12.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0"
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "express": "^4.16.4"
   }
 }
