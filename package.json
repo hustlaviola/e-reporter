@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./server/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require babel-register ./server/tests --exit"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,9 @@
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "express": "^4.16.4"
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "express": "^4.16.4",
+    "mocha": "^5.2.0"
   }
 }
