@@ -9,4 +9,7 @@ router.get('/red-flags', IncidentController.getAllRedFlags);
 router.get('/red-flags/:id', Validate.validateId,
   IncidentController.getRedFlag);
 
+router.post('/red-flags', Validate.validateLocationUpdate,
+  Validate.validatePost, IncidentController.postRedFlag);
+
 export default router;

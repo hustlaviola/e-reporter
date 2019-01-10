@@ -50,6 +50,51 @@ class IncidentController {
       data: redFlag,
     });
   }
+
+  /**
+   * @method postRedFlag
+   * @description Create a new red-flag record`
+   * @static
+   * @param {object} req - Request Object
+   * @param {object} res - Response Object
+   * @returns {object} json response
+   * @memberof IncidentController
+   */
+  static postRedFlag(req, res) {
+    const {
+      createdBy, latitude, longitude, Images, Videos, comment,
+    } = req.body;
+
+    const id = incidents.length > 0
+      ? incidents[incidents.length - 1].id + 1 : incidents.length + 1;
+    const createdOn = new Date();
+    const type = 'red-flag';
+    const location = `${latitude}, ${longitude}`;
+    const status = 'draft';
+
+    const redFlag = {
+      id,
+      createdOn,
+      createdBy,
+      type,
+      location,
+      status,
+      Images,
+      Videos,
+      comment,
+    };
+    const response = [
+      {
+        id: redFlag.id,
+        message: 'Created red-flag record',
+      },
+    ];
+    incidents.push(redFlag);
+    return res.status(201).send({
+      status: res.statusCode,
+      data: response,
+    });
+  }
 }
 
 export default IncidentController;
