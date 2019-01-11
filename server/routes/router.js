@@ -12,4 +12,7 @@ router.get('/red-flags/:id', Validate.validateId,
 router.post('/red-flags', Validate.validateLocationUpdate,
   Validate.validatePost, IncidentController.postRedFlag);
 
+router.patch('/red-flags/:id/location', Validate.validateId,
+  Validate.validateLocationUpdate, IncidentController.updateLocation);
+
 export default router;

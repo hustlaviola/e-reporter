@@ -6,6 +6,15 @@ import incidents from '../models/incidentsModel';
  * @class Validate
  */
 class Validate {
+  /**
+   * @method validateId
+   * @description Validates id of any endpoint where id is required
+   * @static
+   * @param {object} req - Request object
+   * @param {object} res - Response Object
+   * @returns {object}
+   * @memberof Validate
+   */
   static validateId(req, res, next) {
     const redFlagId = Number(req.params.id);
 
@@ -27,6 +36,15 @@ class Validate {
     return next();
   }
 
+  /**
+   * @method validatePost
+   * @description Validates post api endpoint
+   * @static
+   * @param {object} req - Request object
+   * @param {object} res - Response Object
+   * @returns {object}
+   * @memberof Validate
+   */
   static validatePost(req, res, next) {
     const {
       latitude,
@@ -58,6 +76,15 @@ class Validate {
     return next();
   }
 
+  /**
+   * @method validateLocationUpdate
+   * @description Validates coordinates of a location
+   * @static
+   * @param {object} req - Request object
+   * @param {object} res - Response Object
+   * @returns {object}
+   * @memberof Validate
+   */
   static validateLocationUpdate(req, res, next) {
     const {
       latitude,
