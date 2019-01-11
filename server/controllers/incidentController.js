@@ -146,6 +146,32 @@ class IncidentController {
       data: response,
     });
   }
+
+  /**
+   * @method deleteRedFlag
+   * @description Delete a specific red-flag record
+   * @static
+   * @param {object} req - Request Object
+   * @param {object} res - Response Object
+   * @returns {object} json response
+   * @memberof IncidentController
+   */
+  static deleteRedFlag(req, res) {
+    const redFlag = incidents
+      .find(incident => incident.id === parseInt(req.params.id, 10));
+
+    const index = incidents.indexOf(redFlag);
+
+    incidents.splice(index, 1);
+    const response = [{
+      id: redFlag.id,
+      message: 'red-flag record has been deleted',
+    }];
+    return res.status(202).send({
+      status: res.statusCode,
+      data: response,
+    });
+  }
 }
 
 export default IncidentController;
