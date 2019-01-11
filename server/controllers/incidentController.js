@@ -95,6 +95,33 @@ class IncidentController {
       data: response,
     });
   }
+
+  /**
+   * @method updateLocation
+   * @description Edit location of a red-flag record
+   * @static
+   * @param {object} req - Request Object
+   * @param {object} res - Response Object
+   * @returns {object} json response
+   * @memberof IncidentController
+   */
+  static updateLocation(req, res) {
+    const redFlag = incidents
+      .find(incident => incident.id === parseInt(req.params.id, 10));
+
+    const { latitude, longitude } = req.body;
+
+    redFlag.location = `${latitude}, ${longitude}`;
+
+    const response = [{
+      id: redFlag.id,
+      message: 'Updated red-flag record\'s location',
+    }];
+    return res.status(200).send({
+      status: res.statusCode,
+      data: response,
+    });
+  }
 }
 
 export default IncidentController;
