@@ -123,6 +123,28 @@ class Validate {
 
     return next();
   }
+
+  /**
+   * @method validateCommentUpdate
+   * @description Validates comment, checks if comment field is empty
+   * @static
+   * @param {object} req - Request object
+   * @param {object} res - Response Object
+   * @returns {object}
+   * @memberof Validate
+   */
+  static validateCommentUpdate(req, res, next) {
+    const { comment } = req.body;
+
+    if (!comment) {
+      return res.status(400).send({
+        status: res.statusCode,
+        error: 'Please add a new comment',
+      });
+    }
+
+    return next();
+  }
 }
 
 export default Validate;
