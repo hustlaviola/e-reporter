@@ -122,6 +122,30 @@ class IncidentController {
       data: response,
     });
   }
+
+  /**
+   * @method updateComment
+   * @description Edit comment of a red-flag record
+   * @static
+   * @param {object} req - Request Object
+   * @param {object} res - Response Object
+   * @returns {object} json response
+   * @memberof IncidentController
+   */
+  static updateComment(req, res) {
+    const redFlag = incidents
+      .find(incident => incident.id === parseInt(req.params.id, 10));
+
+    redFlag.comment = req.body.comment;
+    const response = [{
+      id: redFlag.id,
+      message: 'Updated red-flag record\'s comment',
+    }];
+    return res.status(200).send({
+      status: res.statusCode,
+      data: response,
+    });
+  }
 }
 
 export default IncidentController;

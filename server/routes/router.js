@@ -15,4 +15,7 @@ router.post('/red-flags', Validate.validateLocationUpdate,
 router.patch('/red-flags/:id/location', Validate.validateId,
   Validate.validateLocationUpdate, IncidentController.updateLocation);
 
+router.patch('/red-flags/:id/comment', Validate.validateId,
+  Validate.validateCommentUpdate, IncidentController.updateComment);
+
 export default router;
