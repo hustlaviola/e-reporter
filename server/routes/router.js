@@ -18,4 +18,7 @@ router.patch('/red-flags/:id/location', Validate.validateId,
 router.patch('/red-flags/:id/comment', Validate.validateId,
   Validate.validateCommentUpdate, IncidentController.updateComment);
 
+router.delete('/red-flags/:id', Validate.validateId,
+  IncidentController.deleteRedFlag);
+
 export default router;
