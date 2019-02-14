@@ -1,5 +1,8 @@
 import incidents from '../models/incidentsModel';
 
+const latRegEx = /^[-+]?([1-8]?[0-9][.]([0-9]+)|90[.](0+))$/;
+const longRegEX = /^[-+]?((1[0-7][0-9])|([1-9]?[0-9]))[.]([0-9]+)|(180)[.](0+)/;
+
 /**
  * @description Validates incidents
  * @exports Validate
@@ -91,9 +94,6 @@ class Validate {
       longitude,
     } = req.body;
 
-    const latEx = /^[-+]?([1-8]?[0-9][.]([0-9]+)|90[.](0+))$/;
-    const lonEX = /^[-+]?((1[0-7][0-9])|([1-9]?[0-9]))[.]([0-9]+)|(180)[.](0+)/;
-
     if (!latitude) {
       return res.status(400).send({
         status: res.statusCode,
@@ -107,14 +107,14 @@ class Validate {
         error: 'Please enter a longitude',
       });
     }
-    if (!latEx.test(latitude)) {
+    if (!latRegEx.test(latitude)) {
       return res.status(422).send({
         status: res.statusCode,
         error: 'Invalid latitude format',
       });
     }
 
-    if (!lonEX.test(longitude)) {
+    if (!longRegEX.test(longitude)) {
       return res.status(422).send({
         status: res.statusCode,
         error: 'Invalid longitude format',
