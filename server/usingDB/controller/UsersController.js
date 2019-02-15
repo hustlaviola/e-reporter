@@ -16,8 +16,8 @@ class UserController {
     const hashedPassword = Helper.hashPassword(password.trim());
 
     const query = `INSERT INTO users(firstname, lastname, othernames, email,
-      phonenumber, password, username) VALUES($1, $2, $3, $4, $5, $6, $7)
-        RETURNING *`;
+      phonenumber, password, username)
+      VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
     const values = [firstname, lastname, othernames, email,
       phonenumber, hashedPassword, username];
 
@@ -25,7 +25,7 @@ class UserController {
       if (err) {
         return res.status(500).send({
           status: 500,
-          error: 'Something went wrong with the database.',
+          error: 'database error',
         });
       }
       const user = data.rows[0];
@@ -73,7 +73,7 @@ class UserController {
       if (!Helper.verifyPassword(password, user.password)) {
         return res.status(422).send({
           status: 422,
-          error: 'Invalid login details. Email or password is wrong',
+          error: 'Invalid details. Email or password is incorrect',
         });
       }
 
@@ -87,12 +87,9 @@ class UserController {
         status: 200,
         data: [{
           token,
-          user: {
-            email: user.email,
-            isAdmin: user.isadmin,
-          },
+          user,
         }],
-        message: 'Successfully signed in',
+        message: 'Sign in successful',
       });
     });
   }

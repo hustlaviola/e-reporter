@@ -8,7 +8,7 @@ const createUsersTable = `
     password VARCHAR(65) NOT NULL,
     phonenumber VARCHAR(14) UNIQUE NOT NULL,
     username VARCHAR (40) UNIQUE NOT NULL,
-    isAdmin VARCHAR (5) DEFAULT 'false',
+    isadmin VARCHAR (5) DEFAULT 'false',
     registered TIMESTAMP WITH TIME ZONE DEFAULT now(),
     updated TIMESTAMP WITH TIME ZONE DEFAULT now()
   );
@@ -18,13 +18,15 @@ const createIncidentsTable = `
   CREATE TABLE IF NOT EXISTS incidents(
     id SERIAL PRIMARY KEY NOT NULL,
     createdon TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    createdby INTEGER NOT NULL,
     type VARCHAR(12) NOT NULL,
     comment VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL,
     status VARCHAR(19) DEFAULT 'draft',
     Images VARCHAR(255)[],
     Videos VARCHAR(255)[],
-    updated TIMESTAMP WITH TIME ZONE DEFAULT now()
+    updated TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    FOREIGN KEY (createdby) REFERENCES users (id) ON DELETE CASCADE
   );
 `;
 

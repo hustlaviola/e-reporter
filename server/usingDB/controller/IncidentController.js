@@ -2,6 +2,7 @@ import pool from '../model/database';
 
 class IncidentController {
   static createIncident(req, res) {
+    const { id } = req.user;
     const {
       comment,
       latitude,
@@ -15,9 +16,9 @@ class IncidentController {
     const type = incidentType.substr(0, incidentType.length - 1);
 
     const location = `${latitude}, ${longitude}`;
-    const values = [comment, location, type, images, videos];
-    const query = `INSERT INTO incidents(comment, location, type, images,
-      videos) VALUES($1, $2, $3, $4, $5) RETURNING *`;
+    const values = [id, comment, location, type, images, videos];
+    const query = `INSERT INTO incidents(createdby, comment, location,
+      type, images, videos) VALUES($1, $2, $3, $4, $5, $6) RETURNING *`;
 
     pool.query(query, values, (err, data) => {
       if (err) {
@@ -39,12 +40,13 @@ class IncidentController {
   }
 
   static getIncidents(req, res) {
-    const query = 'SELECT * FROM incidents WHERE type = $1';
+    const { id } = req.user;
     const {
       incidentType,
     } = req.params;
     const type = incidentType.substr(0, incidentType.length - 1);
-    const value = [type];
+    const query = 'SELECT * FROM incidents WHERE type = $1 AND createdby = $2';
+    const value = [type, id];
 
     pool.query(query, value, (err, data) => {
       if (err) {
@@ -61,12 +63,14 @@ class IncidentController {
   }
 
   static getIncident(req, res) {
+    const { id } = req.user;
     const { incidentId } = req.params;
     const { incidentType } = req.params;
     const type = incidentType.substr(0, incidentType.length - 1);
 
-    const query = 'SELECT * FROM incidents WHERE type = $1 AND id = $2';
-    const values = [type, incidentId];
+    const query = `SELECT * FROM incidents WHERE type = $1
+      AND id = $2 AND createdby = $3`;
+    const values = [type, incidentId, id];
     pool.query(query, values, (err, data) => {
       if (err) {
         return res.status(500).send({
@@ -82,18 +86,44 @@ class IncidentController {
   }
 
   static updateIncident(req, res) {
+    const { id } = req.user;
     const { incidentId } = req.params;
     const { incidentType } = req.params;
     const type = incidentType.substr(0, incidentType.length - 1);
 
-    const { latitude, longitude, comment } = req.body;
+    const {
+      latitude, longitude, comment, status,
+    } = req.body;
     const location = `${latitude}, ${longitude}`;
 
+    if (status) {
+      const query = `UPDATE incidents SET status = $1
+        WHERE id = $2 RETURNING id`;
+      const values = [status, incidentId];
+
+      pool.query(query, values, (err) => {
+        if (err) {
+          return res.status(500).send({
+            status: 500,
+            error: 'Database error.',
+          });
+        }
+        return res.status(200).json({
+          status: 200,
+          data: [{
+            id: incidentId,
+            message: `Updated ${type} record status`,
+          }],
+        });
+      });
+    }
+
     if (comment) {
-      const values = [comment, incidentId];
-      const query = `UPDATE incidents SET comment = $1 WHERE id = $2
-        RETURNING id`;
-      pool.query(query, values, (err, data) => {
+      const query = `UPDATE incidents SET comment = $1
+       WHERE id = $2 AND createdby = $3 RETURNING id`;
+      const values = [comment, incidentId, id];
+
+      pool.query(query, values, (err) => {
         if (err) {
           return res.status(500).send({
             status: 500,
@@ -103,7 +133,7 @@ class IncidentController {
         return res.status(200).send({
           status: 200,
           data: [{
-            id: data.rows[0].id,
+            id: incidentId,
             message: `Updated ${type} record's comment`,
           }],
         });
@@ -111,10 +141,11 @@ class IncidentController {
     }
 
     if (latitude && longitude) {
-      const values = [location, incidentId];
-      const query = `UPDATE incidents SET location = $1 WHERE id = $2
-        RETURNING id`;
-      pool.query(query, values, (err, data) => {
+      const query = `UPDATE incidents SET location = $1
+       WHERE id = $2 AND createdby = $3 RETURNING id`;
+      const values = [location, incidentId, id];
+
+      pool.query(query, values, (err) => {
         if (err) {
           return res.status(500).send({
             status: 500,
@@ -124,7 +155,7 @@ class IncidentController {
         return res.status(200).send({
           status: 200,
           data: [{
-            id: data.rows[0].id,
+            id: incidentId,
             message: `Updated ${type} record's location`,
           }],
         });
@@ -133,12 +164,14 @@ class IncidentController {
   }
 
   static deleteIncident(req, res) {
+    const { id } = req.user;
     const { incidentId } = req.params;
     const { incidentType } = req.params;
     const type = incidentType.substr(0, incidentType.length - 1);
-    const query = 'DELETE FROM incidents WHERE id = $1';
+    const query = 'DELETE FROM incidents WHERE id = $1 AND createdby = $2';
+    const values = [incidentId, id];
 
-    pool.query(query, [incidentId], (err) => {
+    pool.query(query, values, (err) => {
       if (err) {
         return res.status(500).send({
           status: 500,

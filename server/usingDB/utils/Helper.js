@@ -2,8 +2,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 class Helper {
-  static generateToken(payload) {
-    const token = jwt.sign(payload, process.env.SECRET, {
+  static generateToken(data) {
+    const token = jwt.sign(data, process.env.SECRET, {
       expiresIn: '7d',
     });
     return token;
