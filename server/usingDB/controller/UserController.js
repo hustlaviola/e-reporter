@@ -13,7 +13,7 @@ class UserController {
       username,
     } = req.body;
 
-    const hashedPassword = Helper.hashPassword(password.trim());
+    const hashedPassword = Helper.hashPassword(password);
 
     const query = `INSERT INTO users(firstname, lastname, othernames, email,
       phonenumber, password, username)
@@ -57,9 +57,9 @@ class UserController {
     const value = [email];
     pool.query(query, value, (err, data) => {
       if (err) {
-        return res.status(400).send({
-          status: 400,
-          error: 'Some inputs missing',
+        return res.status(500).send({
+          status: 500,
+          error: 'Database error',
         });
       }
       const user = data.rows[0];

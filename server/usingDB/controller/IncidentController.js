@@ -1,15 +1,29 @@
 import pool from '../model/database';
+import Helper from '../utils/Helper';
+import ErrorController from '../utils/ErrorController';
 
 class IncidentController {
   static createIncident(req, res) {
     const { id } = req.user;
-    const {
+    let {
       comment,
       latitude,
       longitude,
       images,
       videos,
     } = req.body;
+
+    comment = comment.trim();
+    latitude = latitude.trim();
+    longitude = longitude.trim();
+
+    if (images) {
+      images = Helper.modifyMedia(images);
+    }
+    if (videos) {
+      videos = Helper.modifyMedia(videos);
+    }
+
     const {
       incidentType,
     } = req.params;
@@ -22,10 +36,7 @@ class IncidentController {
 
     pool.query(query, values, (err, data) => {
       if (err) {
-        return res.status(500).send({
-          status: 500,
-          error: 'Database error.',
-        });
+        return ErrorController.databaseError(res);
       }
 
       const incident = data.rows[0];
@@ -50,10 +61,7 @@ class IncidentController {
 
     pool.query(query, value, (err, data) => {
       if (err) {
-        return res.status(500).send({
-          status: 500,
-          error: 'Database error.',
-        });
+        return ErrorController.databaseError(res);
       }
       return res.status(200).send({
         status: 200,
@@ -73,10 +81,7 @@ class IncidentController {
     const values = [type, incidentId, id];
     pool.query(query, values, (err, data) => {
       if (err) {
-        return res.status(500).send({
-          status: 500,
-          error: 'Database error.',
-        });
+        return ErrorController.databaseError(res);
       }
       return res.status(200).send({
         status: 200,
@@ -91,24 +96,23 @@ class IncidentController {
     const { incidentType } = req.params;
     const type = incidentType.substr(0, incidentType.length - 1);
 
-    const {
+    let {
       latitude, longitude, comment, status,
     } = req.body;
     const location = `${latitude}, ${longitude}`;
 
     if (status) {
+      status = status.trim();
+
       const query = `UPDATE incidents SET status = $1
         WHERE id = $2 RETURNING id`;
       const values = [status, incidentId];
 
       pool.query(query, values, (err) => {
         if (err) {
-          return res.status(500).send({
-            status: 500,
-            error: 'Database error.',
-          });
+          return ErrorController.databaseError(res);
         }
-        return res.status(200).json({
+        return res.status(200).send({
           status: 200,
           data: [{
             id: incidentId,
@@ -119,16 +123,15 @@ class IncidentController {
     }
 
     if (comment) {
+      comment = comment.trim();
+
       const query = `UPDATE incidents SET comment = $1
        WHERE id = $2 AND createdby = $3 RETURNING id`;
       const values = [comment, incidentId, id];
 
       pool.query(query, values, (err) => {
         if (err) {
-          return res.status(500).send({
-            status: 500,
-            error: 'Database error.',
-          });
+          return ErrorController.databaseError(res);
         }
         return res.status(200).send({
           status: 200,
@@ -141,16 +144,16 @@ class IncidentController {
     }
 
     if (latitude && longitude) {
+      latitude = latitude.trim();
+      longitude = longitude.trim();
+
       const query = `UPDATE incidents SET location = $1
        WHERE id = $2 AND createdby = $3 RETURNING id`;
       const values = [location, incidentId, id];
 
       pool.query(query, values, (err) => {
         if (err) {
-          return res.status(500).send({
-            status: 500,
-            error: 'Database error.',
-          });
+          return ErrorController.databaseError(res);
         }
         return res.status(200).send({
           status: 200,
@@ -164,22 +167,18 @@ class IncidentController {
   }
 
   static deleteIncident(req, res) {
-    const { id } = req.user;
     const { incidentId } = req.params;
     const { incidentType } = req.params;
     const type = incidentType.substr(0, incidentType.length - 1);
-    const query = 'DELETE FROM incidents WHERE id = $1 AND createdby = $2';
-    const values = [incidentId, id];
+    const query = 'DELETE FROM incidents WHERE id = $1';
+    const values = [incidentId];
 
     pool.query(query, values, (err) => {
       if (err) {
-        return res.status(500).send({
-          status: 500,
-          error: 'Database error.',
-        });
+        return ErrorController.databaseError(res);
       }
       return res.status(200).send({
-        status: 200,
+        status: res.statusCode,
         data: [{
           id: incidentId,
           message: `${type} record has been deleted`,

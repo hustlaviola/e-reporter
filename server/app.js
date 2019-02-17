@@ -1,5 +1,6 @@
 import express from 'express';
 import router from './usingDB/routes/router';
+import ErrorController from './usingDB/utils/ErrorController';
 
 const app = express();
 
@@ -12,12 +13,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1', router);
 
-app.all('/*', (req, res) => {
-  res.status(404).send({
-    status: res.statusCode,
-    error: 'The requested url was not found on this server',
-  });
-});
+app.all('/*', (req, res) => ErrorController.routeError(res));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`listening on port ${PORT}...`));

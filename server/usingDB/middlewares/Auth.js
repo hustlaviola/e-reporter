@@ -23,7 +23,7 @@ class Auth {
 
   static adminAuth(req, res, next) {
     const { isAdmin } = req.user;
-    if (isAdmin === 'false') {
+    if (isAdmin !== 'true') {
       return res.status(403).send({
         status: 403,
         error: 'You are not authorized to perform this action',

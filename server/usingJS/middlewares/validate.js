@@ -1,7 +1,7 @@
 import incidents from '../models/incidentsModel';
 
 const latRegEx = /^[-+]?([1-8]?[0-9][.]([0-9]+)|90[.](0+))$/;
-const longRegEX = /^[-+]?((1[0-7][0-9])|([1-9]?[0-9]))[.]([0-9]+)|(180)[.](0+)/;
+const longRegEX = /^[-+]?((1[0-7][0-9])|([1-9]?[0-9]))[.]([0-9]+)$|(180)[.](0+)$/;
 
 /**
  * @description Validates incidents
