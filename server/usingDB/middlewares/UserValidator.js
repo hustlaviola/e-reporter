@@ -15,6 +15,9 @@ class UserValidator {
       WHERE email = $1 OR username = $2 OR phonenumber = $3`;
 
     pool.query(query, [email, username, phonenumber], (err, data) => {
+      if (err) {
+        return ErrorController.databaseError(res);
+      }
       const result = data.rows[0];
       if (result) {
         let conflict;

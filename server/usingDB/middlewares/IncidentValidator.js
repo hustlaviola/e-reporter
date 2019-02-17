@@ -20,7 +20,6 @@ class IncidentValidator {
     const { incidentType } = req.params;
     const type = incidentType.substr(0, incidentType.length - 1);
     const status = req.url.split('/')[3];
-    console.log(req.user);
 
     if (!regEx.id.test(incidentId) || (incidentId === '0')) {
       return ErrorController.validationError(res, 400, 'The given id is invalid');

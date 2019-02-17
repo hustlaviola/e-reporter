@@ -1,5 +1,6 @@
 import Helper from '../utils/Helper';
 import pool from '../model/database';
+import ErrorController from '../utils/ErrorController';
 
 class UserController {
   static signUp(req, res) {
@@ -23,10 +24,7 @@ class UserController {
 
     pool.query(query, values, (err, data) => {
       if (err) {
-        return res.status(500).send({
-          status: 500,
-          error: 'database error',
-        });
+        return ErrorController.databaseError(res);
       }
       const user = data.rows[0];
       const result = {
@@ -37,7 +35,7 @@ class UserController {
 
       const token = Helper.generateToken(result);
       return res.status(201).send({
-        status: 201,
+        status: res.statusCode,
         data: [{
           token,
           user,
@@ -57,24 +55,17 @@ class UserController {
     const value = [email];
     pool.query(query, value, (err, data) => {
       if (err) {
-        return res.status(500).send({
-          status: 500,
-          error: 'Database error',
-        });
+        return ErrorController.databaseError(res);
       }
       const user = data.rows[0];
       if (!user) {
-        return res.status(422).send({
-          status: 422,
-          error: 'User does not exists',
-        });
+        return ErrorController.validationError(res, 422,
+          'User does not exists');
       }
 
       if (!Helper.verifyPassword(password, user.password)) {
-        return res.status(422).send({
-          status: 422,
-          error: 'Invalid details. Email or password is incorrect',
-        });
+        return ErrorController.validationError(res, 422,
+          'Invalid details. Email or password is incorrect');
       }
 
       const result = {
@@ -84,7 +75,7 @@ class UserController {
       };
       const token = Helper.generateToken(result);
       return res.status(200).send({
-        status: 200,
+        status: res.statusCode,
         data: [{
           token,
           user,

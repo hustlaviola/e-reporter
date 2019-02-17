@@ -41,7 +41,7 @@ class IncidentController {
 
       const incident = data.rows[0];
       return res.status(201).send({
-        status: 201,
+        status: res.statusCode,
         data: [{
           id: incident.id,
           message: `Created ${type} record`,
@@ -64,7 +64,7 @@ class IncidentController {
         return ErrorController.databaseError(res);
       }
       return res.status(200).send({
-        status: 200,
+        status: res.statusCode,
         data: data.rows,
       });
     });
@@ -84,7 +84,7 @@ class IncidentController {
         return ErrorController.databaseError(res);
       }
       return res.status(200).send({
-        status: 200,
+        status: res.statusCode,
         data: data.rows[0],
       });
     });
@@ -102,7 +102,7 @@ class IncidentController {
     const location = `${latitude}, ${longitude}`;
 
     if (status) {
-      status = status.trim();
+      status = status.trim().toLowerCase();
 
       const query = `UPDATE incidents SET status = $1
         WHERE id = $2 RETURNING id`;
@@ -113,7 +113,7 @@ class IncidentController {
           return ErrorController.databaseError(res);
         }
         return res.status(200).send({
-          status: 200,
+          status: res.statusCode,
           data: [{
             id: incidentId,
             message: `Updated ${type} record status`,
@@ -134,7 +134,7 @@ class IncidentController {
           return ErrorController.databaseError(res);
         }
         return res.status(200).send({
-          status: 200,
+          status: res.statusCode,
           data: [{
             id: incidentId,
             message: `Updated ${type} record's comment`,
@@ -156,7 +156,7 @@ class IncidentController {
           return ErrorController.databaseError(res);
         }
         return res.status(200).send({
-          status: 200,
+          status: res.statusCode,
           data: [{
             id: incidentId,
             message: `Updated ${type} record's location`,
