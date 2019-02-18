@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./server/app.js",
-    "test": "nyc mocha --require babel-register ./server/tests --exit",
+    "test": "nyc mocha --require babel-register ./server/usingDB/test --exit",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "build": "babel ./server/app.js --out-dir build",
     "migrate-db": "babel-node ./server/usingDB/model",
-    "dev-start": "babel-watch server.js"
+    "lint": "eslint ./server --fix",
+    "dev-start": "nodemon ./server/app.js --exec babel-node"
   },
   "repository": {
     "type": "git",
@@ -32,8 +33,10 @@
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
+    "babel-watch": "^7.0.0",
     "bcrypt": "^3.0.4",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
@@ -41,6 +44,7 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "mocha": "^5.2.0",
+    "nodemon": "^1.18.10",
     "pg": "^7.8.0"
   }
 }

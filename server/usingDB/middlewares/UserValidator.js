@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import pool from '../model/database';
 import Helper from '../utils/Helper';
 import ErrorController from '../utils/ErrorController';
@@ -30,7 +29,7 @@ class UserValidator {
         }
 
         return ErrorController.validationError(res, 409,
-          `${conflict} already exist`);
+          `${conflict} already exists`);
       }
       return next();
     });

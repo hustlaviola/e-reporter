@@ -59,13 +59,13 @@ class UserController {
       }
       const user = data.rows[0];
       if (!user) {
-        return ErrorController.validationError(res, 422,
-          'User does not exists');
+        return ErrorController.validationError(res, 400,
+          'User does not exist');
       }
 
       if (!Helper.verifyPassword(password, user.password)) {
-        return ErrorController.validationError(res, 422,
-          'Invalid details. Email or password is incorrect');
+        return ErrorController.validationError(res, 400,
+          'Invalid details! Email or password is incorrect');
       }
 
       const result = {

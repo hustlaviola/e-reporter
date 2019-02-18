@@ -71,15 +71,11 @@ class IncidentController {
   }
 
   static getIncident(req, res) {
-    const { id } = req.user;
     const { incidentId } = req.params;
-    const { incidentType } = req.params;
-    const type = incidentType.substr(0, incidentType.length - 1);
+    const query = 'SELECT * FROM incidents WHERE id = $1';
+    const value = [incidentId];
 
-    const query = `SELECT * FROM incidents WHERE type = $1
-      AND id = $2 AND createdby = $3`;
-    const values = [type, incidentId, id];
-    pool.query(query, values, (err, data) => {
+    pool.query(query, value, (err, data) => {
       if (err) {
         return ErrorController.databaseError(res);
       }
@@ -91,7 +87,6 @@ class IncidentController {
   }
 
   static updateIncident(req, res) {
-    const { id } = req.user;
     const { incidentId } = req.params;
     const { incidentType } = req.params;
     const type = incidentType.substr(0, incidentType.length - 1);
@@ -99,7 +94,6 @@ class IncidentController {
     let {
       latitude, longitude, comment, status,
     } = req.body;
-    const location = `${latitude}, ${longitude}`;
 
     if (status) {
       status = status.trim().toLowerCase();
@@ -126,8 +120,8 @@ class IncidentController {
       comment = comment.trim();
 
       const query = `UPDATE incidents SET comment = $1
-       WHERE id = $2 AND createdby = $3 RETURNING id`;
-      const values = [comment, incidentId, id];
+       WHERE id = $2 RETURNING id`;
+      const values = [comment, incidentId];
 
       pool.query(query, values, (err) => {
         if (err) {
@@ -146,10 +140,11 @@ class IncidentController {
     if (latitude && longitude) {
       latitude = latitude.trim();
       longitude = longitude.trim();
+      const location = `${latitude}, ${longitude}`;
 
       const query = `UPDATE incidents SET location = $1
-       WHERE id = $2 AND createdby = $3 RETURNING id`;
-      const values = [location, incidentId, id];
+       WHERE id = $2 RETURNING id`;
+      const values = [location, incidentId];
 
       pool.query(query, values, (err) => {
         if (err) {
@@ -171,9 +166,9 @@ class IncidentController {
     const { incidentType } = req.params;
     const type = incidentType.substr(0, incidentType.length - 1);
     const query = 'DELETE FROM incidents WHERE id = $1';
-    const values = [incidentId];
+    const value = [incidentId];
 
-    pool.query(query, values, (err) => {
+    pool.query(query, value, (err) => {
       if (err) {
         return ErrorController.databaseError(res);
       }

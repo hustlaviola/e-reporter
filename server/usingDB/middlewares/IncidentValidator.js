@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 import pool from '../model/database';
 import Helper from '../utils/Helper';
 import ErrorController from '../utils/ErrorController';
