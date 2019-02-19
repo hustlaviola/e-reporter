@@ -8,7 +8,7 @@ services:
 
 before_script:
   - psql -c 'create database ireporter;' -U postgres
-  - npm run db-migrate
+  - npm run seeds
 
 after_success:
   - npm run coverage
