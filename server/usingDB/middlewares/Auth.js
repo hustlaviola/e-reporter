@@ -9,14 +9,17 @@ class Auth {
     }
 
     const token = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.SECRET);
 
-    if (!decoded) {
-      return ErrorController.validationError(res, 401,
-        'Authentication failed');
+    try {
+      const decoded = jwt.verify(token, process.env.SECRET);
+      req.user = decoded;
+      return next();
+    } catch (err) {
+      return res.status(401).send({
+        status: res.statusCode,
+        error: 'Authentication failed',
+      });
     }
-    req.user = decoded;
-    return next();
   }
 
   static adminAuth(req, res, next) {

@@ -1,6 +1,6 @@
-const dropUsers = 'DROP TABLE IF EXISTS users CASCADE; ';
-const dropIncidents = 'DROP TABLE IF EXISTS incidents CASCADE; ';
+const dropUsersTable = 'DROP TABLE IF EXISTS users CASCADE; ';
+const dropIncidentsTable = 'DROP TABLE IF EXISTS incidents CASCADE; ';
 
-const dropQuery = `${dropUsers}${dropIncidents}`;
+const dropTablesQuery = `${dropUsersTable}${dropIncidentsTable}`;
 
-export default dropQuery;
+export default dropTablesQuery;

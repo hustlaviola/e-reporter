@@ -81,7 +81,9 @@ class IncidentController {
       }
       return res.status(200).send({
         status: res.statusCode,
-        data: data.rows[0],
+        data: [
+          data.rows[0],
+        ],
       });
     });
   }

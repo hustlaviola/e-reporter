@@ -1,8 +1,8 @@
 import pool from './database';
-import createQuery from './createTables';
-import dropQuery from './dropTables';
+import createTablesQuery from './createTables';
+import dropTablesQuery from './dropTables';
 
-const queries = `${dropQuery}${createQuery}`;
+const queries = `${dropTablesQuery}${createTablesQuery}`;
 
 pool.query(queries, () => {
   pool.end();

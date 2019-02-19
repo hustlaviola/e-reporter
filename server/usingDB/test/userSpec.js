@@ -17,7 +17,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola10@gmail.com',
         password: 'viola10',
-        phonenumber: '09022334455',
+        phonenumber: '07022334455',
         username: 'viola10',
       })
       .end((err, res) => {
@@ -39,7 +39,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola10@gmail.com',
         password: 'viola10',
-        phonenumber: '09022334455',
+        phonenumber: '07022334455',
         username: 'viola10',
       })
       .end((err, res) => {
@@ -61,7 +61,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola10@gmail.com',
         password: 'viola10',
-        phonenumber: '09022334455',
+        phonenumber: '07022334455',
         username: 'viola10',
       })
       .end((err, res) => {
@@ -83,7 +83,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola10@gmail.com',
         password: 'viola10',
-        phonenumber: '09022334455',
+        phonenumber: '07022334455',
         username: 'viola10',
       })
       .end((err, res) => {
@@ -105,7 +105,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet345',
         email: 'viola10@gmail.com',
         password: 'viola10',
-        phonenumber: '09022334455',
+        phonenumber: '07022334455',
         username: 'viola10',
       })
       .end((err, res) => {
@@ -127,7 +127,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: '',
         password: 'viola10',
-        phonenumber: '09022334455',
+        phonenumber: '07022334455',
         username: 'viola10',
       })
       .end((err, res) => {
@@ -149,7 +149,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola10gmail.com',
         password: 'viola10',
-        phonenumber: '09022334455',
+        phonenumber: '07022334455',
         username: 'viola10',
       })
       .end((err, res) => {
@@ -171,7 +171,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola10@gmail.com',
         password: '',
-        phonenumber: '09022334455',
+        phonenumber: '07022334455',
         username: 'viola10',
       })
       .end((err, res) => {
@@ -193,7 +193,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola10@gmail.com',
         password: 'vio56',
-        phonenumber: '09022334455',
+        phonenumber: '07022334455',
         username: 'viola10',
       })
       .end((err, res) => {
@@ -237,7 +237,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola10@gmail.com',
         password: 'viola10',
-        phonenumber: '09022rt4455',
+        phonenumber: '07022rt4455',
         username: 'viola10',
       })
       .end((err, res) => {
@@ -259,7 +259,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola10@gmail.com',
         password: 'viola10',
-        phonenumber: '09022334455',
+        phonenumber: '07022334455',
         username: '',
       })
       .end((err, res) => {
@@ -281,7 +281,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola10@gmail.com',
         password: 'viola10',
-        phonenumber: '09022334455',
+        phonenumber: '07022334455',
         username: 'o..la**10',
       })
       .end((err, res) => {
@@ -303,7 +303,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola10@gmail.com',
         password: 'viola10',
-        phonenumber: '09022334455',
+        phonenumber: '07022334455',
         username: 'viola10',
       })
       .end((err, res) => {
@@ -327,8 +327,8 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola10@gmail.com',
         password: 'viola10',
-        phonenumber: '09022334455',
-        username: 'viola10',
+        phonenumber: '07122334455',
+        username: 'viola11',
       })
       .end((err, res) => {
         expect(res).to.have.status(409);
@@ -349,7 +349,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola11@gmail.com',
         password: 'viola10',
-        phonenumber: '09022334455',
+        phonenumber: '07022334455',
         username: 'viola11',
       })
       .end((err, res) => {
@@ -371,7 +371,7 @@ describe('/POST Signup route', () => {
         othernames: 'Violet',
         email: 'viola11@gmail.com',
         password: 'viola10',
-        phonenumber: '09033334455',
+        phonenumber: '07122334455',
         username: 'viola10',
       })
       .end((err, res) => {

@@ -9,14 +9,14 @@ class ErrorController {
   static routeError(res) {
     return res.status(404).send({
       status: res.statusCode,
-      message: 'The requested url was not found on this server',
+      error: 'The requested url was not found on this server',
     });
   }
 
   static databaseError(res) {
     return res.status(500).send({
       status: res.statusCode,
-      message: 'Database Error',
+      error: 'Database Error',
     });
   }
 }

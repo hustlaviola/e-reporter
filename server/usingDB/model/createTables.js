@@ -1,11 +1,11 @@
 const createUsersTable = `
   CREATE TABLE IF NOT EXISTS users(
     id SERIAL PRIMARY KEY NOT NULL,
-    firstname VARCHAR (40) NOT NULL,
-    lastname VARCHAR (40) NOT NULL,
-    othernames VARCHAR(40),
-    email VARCHAR(30) UNIQUE NOT NULL,
-    password VARCHAR(65) NOT NULL,
+    firstname VARCHAR (30) NOT NULL,
+    lastname VARCHAR (30) NOT NULL,
+    othernames VARCHAR(30),
+    email VARCHAR(70) UNIQUE NOT NULL,
+    password VARCHAR(60) NOT NULL,
     phonenumber VARCHAR(14) UNIQUE NOT NULL,
     username VARCHAR (40) UNIQUE NOT NULL,
     isadmin VARCHAR (5) DEFAULT 'false',
@@ -30,6 +30,7 @@ const createIncidentsTable = `
   );
 `;
 
-const createQuery = `${createUsersTable}${createIncidentsTable}`;
 
-export default createQuery;
+const createTablesQuery = `${createUsersTable}${createIncidentsTable}`;
+
+export default createTablesQuery;

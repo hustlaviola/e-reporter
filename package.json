@@ -1,16 +1,18 @@
 {
-  "name": "eReporter",
+  "name": "ereporter",
   "version": "1.0.0",
   "description": "iReporter enables every citizen to bring any form of corruption to the notice of appropriate authorities and the general public.",
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./server/app.js",
+    "dev": "nodemon ./server/app.js --exec babel-node",
     "test": "nyc mocha --require babel-register ./server/usingDB/test --exit",
+    "seeds-delete": "babel-node ./server/usingDB/seeders/delete",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "build": "babel ./server/app.js --out-dir build",
     "migrate-db": "babel-node ./server/usingDB/model",
-    "lint": "eslint ./server --fix",
-    "dev-start": "nodemon ./server/app.js --exec babel-node"
+    "seeds": "babel-node ./server/usingDB/seeders",
+    "lint": "eslint ./server --fix"
   },
   "repository": {
     "type": "git",
