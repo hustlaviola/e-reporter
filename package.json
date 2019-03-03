@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/hustlaviola/eReporter#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.12.0",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -35,7 +35,7 @@
     "nyc": "^13.1.0"
   },
   "dependencies": {
-    "babel-preset-env": "^1.7.0",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-register": "^6.26.0",
     "babel-watch": "^7.0.0",
